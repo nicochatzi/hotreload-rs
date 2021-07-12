@@ -1,0 +1,12 @@
+[package]
+name = "app"
+version = "0.1.0"
+authors = ["Nico Chatzi <nico.chatzigianis@focusrite.com>"]
+edition = "2018"
+
+[[bin]]
+name = "app"
+path = "main.rs"
+
+[dependencies]
+hotreload = { path = "../../../hotreload" }

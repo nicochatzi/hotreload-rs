@@ -1,0 +1,65 @@
+# Hotreload
+
+[<img alt="github" src="https://img.shields.io/static/v1?label=github&message=nicochatzi/hotreload-rs&style=flat-square&color=lightgrey&logo=github" height="20">](https://github.com/nicochatzi/hotreload-rs)
+[<img alt="crates.io" src="https://img.shields.io/crates/v/hotreload.svg?style=flat-square&color=fc8d62&logo=rust" height="20">](https://crates.io/crates/hotreload)
+[<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-hotreload-66c2a5?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyByb2xlPSJpbWciIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjxwYXRoIGZpbGw9IiNmNWY1ZjUiIGQ9Ik00ODguNiAyNTAuMkwzOTIgMjE0VjEwNS41YzAtMTUtOS4zLTI4LjQtMjMuNC0zMy43bC0xMDAtMzcuNWMtOC4xLTMuMS0xNy4xLTMuMS0yNS4zIDBsLTEwMCAzNy41Yy0xNC4xIDUuMy0yMy40IDE4LjctMjMuNCAzMy43VjIxNGwtOTYuNiAzNi4yQzkuMyAyNTUuNSAwIDI2OC45IDAgMjgzLjlWMzk0YzAgMTMuNiA3LjcgMjYuMSAxOS45IDMyLjJsMTAwIDUwYzEwLjEgNS4xIDIyLjEgNS4xIDMyLjIgMGwxMDMuOS01MiAxMDMuOSA1MmMxMC4xIDUuMSAyMi4xIDUuMSAzMi4yIDBsMTAwLTUwYzEyLjItNi4xIDE5LjktMTguNiAxOS45LTMyLjJWMjgzLjljMC0xNS05LjMtMjguNC0yMy40LTMzLjd6TTM1OCAyMTQuOGwtODUgMzEuOXYtNjguMmw4NS0zN3Y3My4zek0xNTQgMTA0LjFsMTAyLTM4LjIgMTAyIDM4LjJ2LjZsLTEwMiA0MS40LTEwMi00MS40di0uNnptODQgMjkxLjFsLTg1IDQyLjV2LTc5LjFsODUtMzguOHY3NS40em0wLTExMmwtMTAyIDQxLjQtMTAyLTQxLjR2LS42bDEwMi0zOC4yIDEwMiAzOC4ydi42em0yNDAgMTEybC04NSA0Mi41di03OS4xbDg1LTM4Ljh2NzUuNHptMC0xMTJsLTEwMiA0MS40LTEwMi00MS40di0uNmwxMDItMzguMiAxMDIgMzguMnYuNnoiPjwvcGF0aD48L3N2Zz4K" height="20">](https://docs.rs/hotreload)
+[<img alt="build status" src="https://img.shields.io/github/workflow/status/nicochatzi/hotreload-rs/CI/main?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwLjk4NCAxMy44MzZhLjUuNSAwIDAgMS0uMzUzLS4xNDZsLS43NDUtLjc0M2MtLjQ4LS40NzkuMjI2LTEuMTg3LjcwNi0uNzA4IDAgMCAuMjA3LjM5MS4zOTIuMzkxLjU1NiAwIDEuMTgxLTEuMTggMS4xODEtMS4xOC40NzItLjQ3MSAxLjE4LjIzNi43MDguNzA3bC0xLjUzNSAxLjUzM2EuNTAxLjUwMSAwIDAgMS0uMzU0LjE0NnptOS4zNTMtLjE0N2wxLjUzNC0xLjUzMmMuNDY0LS40NjMtLjIzNi0xLjE2Mi0uNzA3LS43MDctLjI0LjIzMi0uNjI1IDEuMTgtMS4xODEgMS4xOC0uMTg1IDAtLjE2LS4xNTItLjM5Mi0uMzkxLS40NzItLjQ4Ny0xLjE4Ny4yMy0uNzA2LjcwOGwuNzQ2Ljc0M2MuMTk2LjE5NS41MS4xOTQuNzA2LS4wMDF6TTQuNTI3IDcuNDUybDIuNTU3LTEuNTg1QTEgMSAwIDAgMCA3LjA5IDQuMTdMNC41MzMgMi41NkExIDEgMCAwIDAgMyAzLjQwNnYzLjE5NmExIDEgMCAwIDAgMS41MjcuODV6bTIuMDMtMi40MzZDNi41NTQgNi4wMTkgNC44NzcgNy4wOSA0IDYuNjAyYy0uOTMtLjUxOC0uOTMzLTIuNjgxIDAtMy4xOTYuODgyLS40ODcgMi41Ni42MDMgMi41NTcgMS42MXpNMjQgMTIuNWMwIDEuOTMtMS41NyAzLjUwMi0zLjUgMy41LTEuNzM4LS4wMDItMS43MjItMy0zLjQ2LTNoLTIuMDhjLTEuNzM4IDAtMS43MjIgMy0zLjQ2IDNhMy41IDMuNSAwIDAgMS0zLjQ2LTNjLS4yMTktMS41MS0uMzcyIDAtLjU1OCAwQzYuNTEgMTMgNSAxMS4wNTYgNSAxMS45NThWMTdjMCAxLjY1NCAxLjM0NiAzIDMgMyAuMDEzIDAtLjE3OCAxLjUxLjA0IDAgLjI0NC0xLjY5MyAxLjctMyAzLjQ2LTMgMS45MyAwIDMuNSAxLjU3IDMuNSAzLjVzLTEuNTcgMy41MDItMy41IDMuNWEzLjUgMy41IDAgMCAxLTMuNDYtM2MtLjIxOS0xLjUxLS4wMjcgMC0uMDQgMC0yLjIwNiAwLTQtMS43OTQtNC00IDAtMi4zNjcgMi4wNjUtNi42NzcgMC03LjEwMUE1LjAwOCA1LjAwOCAwIDAgMSAwIDVjMC0yLjc1NyAyLjI0My01IDUtNWE1LjAwNCA1LjAwNCAwIDAgMSA1IDVjLS4wMDIgMi43NC0yLjQ3NiAzLjgyMy00Ljk1MiA0Ljk5OEMzLjk3OCAxMC41MDYgNi4yOTcgMTIgNy40ODIgMTJoLjU1OGMxLjcxIDAgMS43LTMuMDAxIDMuNDYtMyAxLjczOC4wMDEgMS43MjIgMyAzLjQ2IDNoMi4wOGMxLjczOCAwIDEuNzIyLTIuOTk4IDMuNDYtM2EzLjUwMyAzLjUwMyAwIDAgMSAzLjUgMy41em0tMTUgOGMwIDEuMzc4IDEuMTIyIDIuNSAyLjUgMi41czIuNS0xLjEyMiAyLjUtMi41LTEuMTIyLTIuNS0yLjUtMi41QTIuNTAzIDIuNTAzIDAgMCAwIDkgMjAuNXpNNSA5YzIuMjA2IDAgNC0xLjc5NCA0LTRTNy4yMDYgMSA1IDEgMSAyLjc5NCAxIDVzMS43OTQgNCA0IDR6bTkgMy41YzAtMS4zNzgtMS4xMjItMi41LTIuNS0yLjVBMi41MDMgMi41MDMgMCAwIDAgOSAxMi41YzAgMS4zNzggMS4xMjIgMi41IDIuNSAyLjVzMi41LTEuMTIyIDIuNS0yLjV6bTkgMGMwLTEuMzc4LTEuMTIyLTIuNS0yLjUtMi41YTIuNTAzIDIuNTAzIDAgMCAwLTIuNSAyLjVjMCAxLjM3OCAxLjEyMiAyLjUgMi41IDIuNXMyLjUtMS4xMjIgMi41LTIuNXptLTEzIDhjMCAuNjY3IDEgLjY2NyAxIDBzLTEtLjY2Ny0xIDB6bTIgMGMwIC42NjcgMSAuNjY3IDEgMHMtMS0uNjY3LTEgMHptMTIgMGMwIDEuOTMtMS41NyAzLjUwMi0zLjUgMy41YTMuNTA4IDMuNTA4IDAgMCAxLTMuNDYtMy4wMDJjLS4wMDEtLjAwNy0uMDEzLjAwNS0uMDIxLjAwNS0uMDA3IDAtLjMzNy4wMTQtLjUwNi4wMTctLjAwNiAwIC4zMTYuMDA5LS4wMTcgMC0uNjQtLjAxNi0uNjU1LS45NzgtLjAxNi0uOTk5bC41MDYtLjAxN2MuMDE4IDAgLjA1LjAyNC4wNTIuMDA3LjI2MS0xLjcyMiAxLjcyLTMuMDEgMy40NjItMy4wMTFhMy41MDMgMy41MDMgMCAwIDEgMy41IDMuNXptLTEgMGMwLTEuMzc4LTEuMTIyLTIuNS0yLjUtMi41YTIuNTAzIDIuNTAzIDAgMCAwLTIuNSAyLjVjMCAxLjM3OCAxLjEyMiAyLjUgMi41IDIuNXMyLjUtMS4xMjIgMi41LTIuNXoiIGZpbGw9IiNmZmYiLz48L3N2Zz4=" height="20">](https://github.com/nicochatzi/hotreload-rs/actions?query=branch%3Amain)
+
+
+This library allows an app to reload functions from a dynamic library during runtime.
+
+```toml
+[dependencies]
+hotreload = "0.1"
+```
+
+## Usage
+
+```rust
+// app/src/main.rs
+// run `cargo watch -c -x run` in app/
+hotreload::register! {
+    lib => "path/to/dir/lib/is/in"
+}
+
+#[hotreload::from(lib)]
+fn print() {
+    println!("fallback implementation");
+}
+
+fn main() {
+    loop {
+        print();
+        std::thread::sleep(std::time::Duration::from_secs(1));
+    }
+}
+
+// lib/src/lib.rs
+// run `cargo watch -c -x build` in lib/
+#[no_mangle]
+fn print() {
+    println!("changes here will be reloaded");
+}
+```
+
+## Details
+
+
+
+<br>
+
+#### License
+
+<sup>
+Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
+2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
+</sup>
+
+<br>
+
+<sub>
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
+be dual licensed as above, without any additional terms or conditions.
+</sub>
+
